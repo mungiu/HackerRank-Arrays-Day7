@@ -1,23 +1,36 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
-class Solution
+namespace APFoodEquals
 {
-    public static object RegEx { get; private set; }
-
-    static void Main(String[] args)
+    class Program
     {
-        int N = Convert.ToInt32(Console.ReadLine());
-        string A = Console.ReadLine();
+        static void Main(string[] args)
+        {
+            //instantiated 2 food items using different blueprints but able to assign
+            //both to FoodGroup, since CookedFood inherits from Food
+            Food apple = new Food("apple", FoodGroup.Fruit);
+            Food apple2 = new Food("apple", FoodGroup.Fruit);
+            CookedFood stewedApple = new CookedFood("stewed", "apple", FoodGroup.Fruit);
+            CookedFood bakedApple = new CookedFood("baked", "apple", FoodGroup.Fruit);
+            CookedFood stewedApple2 = new CookedFood("stewed", "apple", FoodGroup.Fruit);
 
-        string pattern = @"\ ";
-        string[] aTemp = Regex.Split(A, pattern);
-        Array.Reverse(aTemp);
-        string aFinal = String.Join(" ", aTemp);
-        
-        Console.Write(aFinal);
+            DisplayWhetherEqual(apple, stewedApple);
+            DisplayWhetherEqual(stewedApple, bakedApple);
+            DisplayWhetherEqual(stewedApple, stewedApple2);
+            DisplayWhetherEqual(apple, apple2);
+            DisplayWhetherEqual(apple, apple);
+        }
+
+        static void DisplayWhetherEqual(Food food1, Food food2)
+        {
+            if (food1 == food2)
+                Console.WriteLine(string.Format("{0,12} == {1}", food1, food2));
+            else
+                Console.WriteLine(string.Format("{0,12} != {1}", food1, food2));
+        }
     }
 }
